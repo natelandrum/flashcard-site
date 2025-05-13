@@ -1,36 +1,38 @@
 <script setup lang="ts">
-  const vocab = ref<Array<{ word: string, translation: string }>>([]);
-  const hydrated = ref(false);
-  const toast = useToast();
+const vocab = ref<Array<{ word: string, translation: string }>>([]);
+const hydrated = ref(false);
+const toast = useToast();
+const isModalOpen = ref(false);
+const { addList } = useLocalStorage();
+
+onMounted(() => {
+  hydrated.value = true;
+});
+
+function handleFileUploaded(fileData: { data: Array<{ word: string, translation: string }>, listName: string }) {
+  vocab.value = fileData.data;
   
-  onMounted(() => {
-    hydrated.value = true;
-    
-    // Check for existing vocab in sessionStorage (in case of refresh)
-    const savedVocab = sessionStorage.getItem('vocab');
-    if (savedVocab) {
-      try {
-        const parsed = JSON.parse(savedVocab);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          vocab.value = parsed;
-          toast.info('Loaded previously imported vocabulary');
-        }
-      } catch (e) {
-        console.error('Failed to parse saved vocabulary', e);
-      }
-    }
-  });
+  // Save to local storage with provided list name, including both words and translations
+  addList(fileData.listName, vocab.value);
   
-  function handleFileUploaded(data: Array<{ word: string, translation: string }>) {
-    vocab.value = data;
-    console.log('Loaded vocab:', vocab.value); // For debugging
-  }
-  
-  function startFlashcards() {
-    // Store vocab temporarily for next page
-    sessionStorage.setItem('vocab', JSON.stringify(vocab.value));
-    navigateTo('/flashcards');
-  }
+  // Automatically open vocabulary manager after a short delay
+  setTimeout(() => {
+    openModal();
+  }, 1000);
+}
+
+function openModal() {
+  isModalOpen.value = true;
+}
+
+function closeModal() {
+  isModalOpen.value = false;
+}
+
+function handleListSelected(listName: string) {
+  toast.success(`Selected list: ${listName}`);
+  navigateTo('/flashcards');
+}
 </script>
 
 <template>
@@ -43,8 +45,22 @@
       <HomeFileUploader 
         :has-vocab="vocab.length > 0" 
         @file-uploaded="handleFileUploaded" 
-        @start-flashcards="startFlashcards" 
       />
+
+      <!-- Button to open the Vocabulary Manager Modal -->
+      <button 
+        class="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg transition-colors duration-200 shadow-md flex items-center justify-center mx-auto"
+        @click="openModal"
+      >
+        <span>Vocabulary Lists</span>
+      </button>
     </div>
+
+    <!-- Vocabulary Manager Modal -->
+    <FlashcardsVocabularyManagerModal 
+      :is-open="isModalOpen" 
+      @close="closeModal"
+      @list-selected="handleListSelected" 
+    />
   </div>
 </template>

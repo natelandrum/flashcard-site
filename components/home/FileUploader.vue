@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const emit = defineEmits(['fileUploaded', 'startFlashcards']);
+const emit = defineEmits(['fileUploaded']);
 
 const props = defineProps<{
   hasVocab: boolean;
@@ -20,8 +20,14 @@ function handleFileUpload(event: Event) {
         
         // Validate the data structure
         if (Array.isArray(data) && data.length > 0) {
-          emit('fileUploaded', data);
-          toast.success(`Vocabulary loaded! Found ${data.length} words.`);
+          // Get a name for the list from the file name (remove extension)
+          const suggestedName = file.name.replace('.json', '');
+          const listName = prompt('Enter a name for this vocabulary list:', suggestedName) || suggestedName;
+          
+          // Emit the data with the list name
+          emit('fileUploaded', { data, listName });
+          toast.success(`Vocabulary "${listName}" loaded with ${data.length} words!`);
+          toast.info('Open "Vocabulary Lists" to start studying');
         } else {
           toast.error('Invalid data format. Expected an array of vocabulary items.');
         }
@@ -35,15 +41,6 @@ function handleFileUpload(event: Event) {
   };
   reader.readAsText(file);
 }
-
-function startFlashcards() {
-  if (!props.hasVocab) {
-    toast.warning('Please load vocabulary first.');
-    return;
-  }
-  
-  emit('startFlashcards');
-}
 </script>
 
 <template>
@@ -54,13 +51,5 @@ function startFlashcards() {
       </span>
       <input type="file" accept=".json" @change="handleFileUpload" class="hidden" />
     </label>
-
-    <button
-      v-if="props.hasVocab"
-      @click="startFlashcards"
-      class="hover:cursor-pointer w-fit mx-auto border-1 border-gray-700 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-md transition-colors duration-200"
-    >
-      🚀 Start Flashcards
-    </button>
   </div>
 </template>
