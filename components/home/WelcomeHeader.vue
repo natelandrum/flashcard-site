@@ -20,6 +20,12 @@ const animatedText = computed(() => {
     },
   ];
 });
+
+function getLetterColor(index: number, length: number) {
+  // Start with green (hue: 120) and transition to blue (hue: 240)
+  const hue = 120 + (index / (length - 1)) * 120;
+  return `hsl(${hue}, 100%, 45%)`;
+}
 </script>
 
 <template>
@@ -33,27 +39,30 @@ const animatedText = computed(() => {
             class="transition-all duration-500"
             :class="{
               'opacity-100 translate-y-0': hydrated,
-              'opacity-0 translate-y-3': !hydrated
-            }"
+              'opacity-0 -translate-x-3': !hydrated
+}"
             :style="{ transitionDelay: `${item.delay}ms` }"
           >
             {{ item.letter }}
           </span>
         </template>
         <template v-else>
-          <span
-            class="transition-all duration-500 bg-clip-text text-transparent"
-            :class="{
-              'opacity-100 translate-y-0': hydrated,
-              'opacity-0 translate-y-3': !hydrated
-            }"
-            :style="{
-              transitionDelay: `${item.delay}ms`,
-              background: 'linear-gradient(to right, limegreen, blue)',
-              WebkitBackgroundClip: 'text',
-            }"
-          >
-            {{ item.word }}
+          <span>
+            <span 
+              v-for="(letter, letterIndex) in item.word" 
+              :key="letterIndex"
+              class="transition-all duration-500 inline-block"
+              :class="{
+                'opacity-100 translate-y-0': hydrated,
+                'opacity-0 -translate-y-3': !hydrated
+}"
+              :style="{ 
+                transitionDelay: `${item.delay + letterIndex * 80}ms`,
+                color: getLetterColor(letterIndex, item.word.length)
+              }"
+            >
+              {{ letter }}
+            </span>
           </span>
         </template>
       </span>
