@@ -89,7 +89,7 @@ function handleTouchEnd(event: TouchEvent) {
     opacity: 1;
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
     opacity: 0;
   }
 }
@@ -100,14 +100,14 @@ function handleTouchEnd(event: TouchEvent) {
     opacity: 1;
   }
   to {
-    transform: translateX(100%);
+    transform: translateX(50%);
     opacity: 0;
   }
 }
 
 @keyframes slideInLeft {
   from {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
     opacity: 0;
   }
   to {
@@ -118,7 +118,7 @@ function handleTouchEnd(event: TouchEvent) {
 
 @keyframes slideInRight {
   from {
-    transform: translateX(100%);
+    transform: translateX(50%);
     opacity: 0;
   }
   to {
