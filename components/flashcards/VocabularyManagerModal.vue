@@ -49,7 +49,7 @@ watch(() => props.isOpen, (newVal) => {
 
 const calculatePercentage = (knownWords, vocab) => {
   if (!vocab || vocab.length === 0) return '0';
-  return ((knownWords.length / vocab.length) * 100);
+  return (Math.round((knownWords.length / vocab.length) * 100));
 };
 
 const formatDate = (dateString) => {
