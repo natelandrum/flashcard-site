@@ -1,4 +1,14 @@
 <script setup lang="ts">
+useHead({
+  title: 'VocabDrop - Home',
+  meta: [
+    { name: 'description', content: 'Welcome to VocabDrop! Your go-to app for learning vocabulary.' },
+    { property: 'og:title', content: 'VocabDrop - Home' },
+    { property: 'og:description', content: 'Welcome to VocabDrop! Your go-to app for learning vocabulary.' },
+    { property: 'og:image', content: '/icon.png' },
+  ],
+});
+
 const vocab = ref<Array<{ word: string, translation: string }>>([]);
 const hydrated = ref(false);
 const toast = useToast();
