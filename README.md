@@ -1,75 +1,30 @@
-# Nuxt Minimal Starter
+# 📚 Flashcard Site
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A web application for uploading, managing, and studying with flashcards. Built with Nuxt.js. ✨
 
-## Setup
+## 🔍 About
 
-Make sure to install dependencies:
+Flashcard Site is a digital learning tool designed to help users study flashcards. This project aims to make the learning process more efficient and engaging through spaced repetition and interactive card manipulation. 🧠
 
-```bash
-# npm
-npm install
+## ⭐ Features
 
-# pnpm
-pnpm install
+- 📤 Import flashcard decks
+- 🔄 Study with interactive flashcards
+- 📊 Track your learning progress
+- 📱 Responsive design for desktop and mobile use
 
-# yarn
-yarn install
+## 🚀 How It Works (As easy as 1, 2, 3)
 
-# bun
-bun install
-```
+1. 📁 Upload a new flashcard deck or select an existing one
+2. 🎯 Start a study session with your flashcards
+3. 📈 Track your progress as you learn
 
-## Development Server
+## 🛠️ Technologies Used
 
-Start the development server on `http://localhost:3000`:
+- [Nuxt.js](https://nuxt.com/) - Vue framework
+- [Vue.js](https://vuejs.org/) - Frontend framework
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
 
-```bash
-# npm
-npm run dev
+## Contributing
 
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Contributions are welcome! Please feel free to submit a Pull Request.
